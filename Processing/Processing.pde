@@ -4,7 +4,8 @@ Serial serial;
 PFont font;
 boolean isConnect = false;
 String cnto = "/dev/tty.usbmodem1411";
-String data, text;
+String text;
+String data;
 
 void setup() {
   printArray(Serial.list());
@@ -13,17 +14,18 @@ void setup() {
   textFont(font, 20);
   background(120);
   isConnect = conSerial();
-  frameRate(10);
+  frameRate(25);
 }
 
 void draw() {
   background(120);
   if (isConnect) {
     text("Connect: " + cnto, 20, 20);
-    data = serial.readString();
-    text = "Analog0: " + data;
+    data = serial.readStringUntil('\n');
+    if(data != null){
+      text = "Analog: " + data;
+    }
     text(text, 20, 50);
-    //println(data);
   } else {
     text("Connect: " + cnto + " is can not use.", 20, 20);
   }

@@ -8,5 +8,6 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   val = analogRead(0);
-  Serial.println(val);
+  Serial.println(val, DEC);
+  delay(50);
 }
