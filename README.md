@@ -4,7 +4,7 @@
 Sample program for next AIT* "Micom and Exercise" serial connection software.
 
 ## Installation
-This sample program is serial connection for PC to Arduino. To action this program, Arduino is needed in addition to the PC. Also, this PC program is created in Processing. To action this program, Processing is needed.
+This sample program is serial connection for PC to Arduino. To action this program, Arduino is needed in addition to the PC. Also, this PC program is created in Processing. To action this program, Processing is need.
 
 ## Other
 If you pressed any key when action Prcessing, you can write serial data. Extension is csv.
