@@ -5,7 +5,7 @@ PFont font;
 boolean isRecord = false, isConnect;
 PrintWriter csv;
 String cnto = "/dev/tty.usbmodem1411";
-String text, data, filename;
+String text, input, filename, data;
 
 void setup() {
   printArray(Serial.list());
@@ -21,26 +21,32 @@ void draw() {
   background(120);
   if (isConnect) {
     text("Connect: " + cnto, 20, 20);
-    data = serial.readStringUntil('\n');
-    if (data != null) {
-      text = "Analog: " + data;
+    input = trim(serial.readStringUntil('\n'));
+    if (input != null) {
+      data = input;
+      text = "Receive: " + data;
       println(text);
     }
     if (isRecord) {
-      csv.print(data);
+      csv.println(data);
       text("Recording...", 20, 100);
     } else {
       text("If you want to record,\nprease press any key.", 20, 100);
     }
-    text(text, 20, 50);
+    try {
+      text(text, 20, 50);
+    }
+    catch(NullPointerException e) {
+    }
   } else {
-    text("Connect: " + cnto + " is can not use.\nPrease connect Arduino and restart program.", 20, 20);
+    text("Connect: " + cnto + " is can not use.\nPrease restart this program.", 20, 20);
   }
 }
 
 boolean conSerial() {
   try {
-    serial = new Serial(this, cnto, 9600);
+    serial = new Serial(this, cnto, 57600);
+    serial.clear();
     return true;
   } 
   catch (Exception e) {
@@ -64,15 +70,15 @@ void keyPressed() {
 String setFilename() {
   filename = "MicomRec_";
   filename += year();
-  if (month() < 10) { filename += "0"; }
+  if (month() < 10) filename += "0";
   filename += month();
-  if (day() < 10) { filename += "0"; }
+  if (day() < 10) filename += "0";
   filename += day();
-  if (hour() < 10) { filename += "0"; }
+  if (hour() < 10) filename += "0";
   filename += hour();
-  if (minute() < 10) { filename += "0"; }
+  if (minute() < 10) filename += "0";
   filename += minute();
-  if (second() < 10) { filename += "0"; }
+  if (second() < 10) filename += "0";
   filename += second();
   filename += ".csv";
   return filename;
